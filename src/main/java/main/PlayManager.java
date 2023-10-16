@@ -1,6 +1,10 @@
 package main;
 
 
+import tetromino.Block;
+import tetromino.Mino_L1;
+import tetromino.Tetromino;
+
 import java.awt.*; // FUCK YOU INTELLIJ FUCK FUCK FUCK
 
 /*
@@ -18,14 +22,28 @@ public class PlayManager {
     public static int top_y;
     public static int bottom_y;
 
+    // tetromino
+    Tetromino currentMino;
+    // store starting x & y
+    final int MINO_START_X;
+    final int MINO_START_Y;
+
     // constructor 4 class
     public PlayManager() {
 
         // Main play area frame
-        left_x = (GamePanel.WIDTH/2) - (WIDTH/2); // 1280/2 (center of the window) - 360/2 = 460
+        left_x = (GamePanel.WIDTH / 2) - (WIDTH / 2); // 1280/2 (center of the window) - 360/2 = 460
         right_x = left_x + WIDTH;
         top_y = 50;
         bottom_y = top_y + HEIGHT;
+
+        // tetrominoes spawn near the center top of the play area
+        MINO_START_X = left_x + (WIDTH / 2) - Block.SIZE;
+        MINO_START_Y = top_y + Block.SIZE;
+
+        // set the starting tetromino
+        currentMino = new Mino_L1();
+        currentMino.setXY(MINO_START_X, MINO_START_Y);
 
     }
 
