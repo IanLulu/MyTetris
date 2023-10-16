@@ -9,7 +9,7 @@ public class Main {
         JFrame window = new JFrame("MyTetris"); // window title
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // discard window properly
         window.setResizable(false); // fixed window size
-//        window.setResizable(true);
+        // window.setResizable(true);
 
         // Add GamePanel to the window
         GamePanel gp = new GamePanel();

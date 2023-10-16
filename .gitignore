@@ -1,0 +1,3 @@
+# Getting rid of generated files being committed
+/target/classes/main/
+.DS_Store
