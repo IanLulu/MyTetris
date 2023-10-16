@@ -6,3 +6,7 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# Getting rid of generated files being committed
+/target/
+.DS_Store
