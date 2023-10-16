@@ -22,6 +22,9 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.black);
         this.setLayout(null);
+        // Implement KeyListener
+        this.addKeyListener(new KeyHandler());
+        this.setFocusable(true); // will only get key input when the window is "focused" (i.e. current window is the game)
 
         pm = new PlayManager();
 

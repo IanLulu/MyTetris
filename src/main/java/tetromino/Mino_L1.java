@@ -19,7 +19,7 @@ public class Mino_L1 extends Tetromino {
         b[2].x = b[0].x;
         b[2].y = b[0].y + Block.SIZE;
         b[3].x = b[0].x + Block.SIZE;
-        b[3].y = b[0].y - Block.SIZE;
+        b[3].y = b[0].y + Block.SIZE;
     }
 
 }

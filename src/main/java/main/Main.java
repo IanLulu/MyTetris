@@ -18,6 +18,9 @@ public class Main {
 
         window.setLocationRelativeTo(null); // no default location on screen
         window.setVisible(true); // make it possible to view the window
+
+        // Start the game thread
+        gp.launchGame();
     }
 
 }

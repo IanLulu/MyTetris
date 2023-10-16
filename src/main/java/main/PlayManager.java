@@ -22,11 +22,14 @@ public class PlayManager {
     public static int top_y;
     public static int bottom_y;
 
-    // tetromino
+    // Tetromino
     Tetromino currentMino;
     // store starting x & y
     final int MINO_START_X;
     final int MINO_START_Y;
+
+    // Others
+    public static int dropInterval = 60; // tetromino drops in every 60 frames or every second
 
     // constructor 4 class
     public PlayManager() {
@@ -72,7 +75,7 @@ public class PlayManager {
         if (currentMino != null) {
             currentMino.draw(g2);
         }
-        
+
     }
 
 }
