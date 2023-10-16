@@ -49,6 +49,8 @@ public class PlayManager {
 
     public void update() {
 
+        currentMino.update();
+
     }
 
     public void draw(Graphics2D g2) {
@@ -66,6 +68,11 @@ public class PlayManager {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x + 60, y + 60);
 
+        // Draw the current tetromino
+        if (currentMino != null) {
+            currentMino.draw(g2);
+        }
+        
     }
 
 }
