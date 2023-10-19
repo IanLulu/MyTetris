@@ -22,4 +22,65 @@ public class Mino_L1 extends Tetromino {
         b[3].y = b[0].y + Block.SIZE;
     }
 
+    public void getDirection1() {
+        // 🟧 this
+        // 🟧 orientation
+        // 🟧🟧
+        tempB[0].x = b[0].x;
+        tempB[0].y = b[0].y;
+        tempB[1].x = b[0].x;
+        tempB[1].y = b[0].y - Block.SIZE;
+        tempB[2].x = b[0].x;
+        tempB[2].y = b[0].y + Block.SIZE;
+        tempB[3].x = b[0].x + Block.SIZE;
+        tempB[3].y = b[0].y + Block.SIZE;
+
+        updateXY(1);
+    }
+    public void getDirection2() {
+        //  2 0 1 this
+        // 🟧🟧🟧 orientation
+        // 🟧 b[3]
+        tempB[0].x = b[0].x;
+        tempB[0].y = b[0].y;
+        tempB[1].x = b[0].x + Block.SIZE;
+        tempB[1].y = b[0].y;
+        tempB[2].x = b[0].x - Block.SIZE;
+        tempB[2].y = b[0].y;
+        tempB[3].x = b[0].x - Block.SIZE;
+        tempB[3].y = b[0].y + Block.SIZE;
+
+        updateXY(2);
+    }
+    public void getDirection3() {
+        // 🟧🟧 this
+        //   🟧 orientation
+        //   🟧
+        tempB[0].x = b[0].x;
+        tempB[0].y = b[0].y;
+        tempB[1].x = b[0].x;
+        tempB[1].y = b[0].y + Block.SIZE;
+        tempB[2].x = b[0].x;
+        tempB[2].y = b[0].y - Block.SIZE;
+        tempB[3].x = b[0].x - Block.SIZE;
+        tempB[3].y = b[0].y - Block.SIZE;
+
+        updateXY(3);
+    }
+    public void getDirection4() {
+        //      🟧 this
+        // 🟧🟧🟧 orientation
+        //
+        tempB[0].x = b[0].x;
+        tempB[0].y = b[0].y;
+        tempB[1].x = b[0].x - Block.SIZE;
+        tempB[1].y = b[0].y;
+        tempB[2].x = b[0].x + Block.SIZE;
+        tempB[2].y = b[0].y;
+        tempB[3].x = b[0].x + Block.SIZE;
+        tempB[3].y = b[0].y - Block.SIZE;
+
+        updateXY(4);
+    }
+
 }
