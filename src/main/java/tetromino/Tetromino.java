@@ -62,6 +62,9 @@ public class Tetromino {
         rightCollision = false;
         bottomCollision = false;
 
+        // add collision check with inactive blocks
+        checkStaticBlockCollision();
+
         // Check frame collision
         // Left wall
         for (int i = 0; i < b.length; i++) {
@@ -87,6 +90,9 @@ public class Tetromino {
         rightCollision = false;
         bottomCollision = false;
 
+        // add collision check with inactive blocks
+        checkStaticBlockCollision();
+
         // Check frame collision
         // Left wall
         for (int i = 0; i < b.length; i++) {
@@ -102,6 +108,33 @@ public class Tetromino {
         for (int i = 0; i < b.length; i++) {
             if (tempB[i].y + Block.SIZE > PlayManager.bottom_y)
                 bottomCollision = true;
+        }
+
+    }
+
+    private void checkStaticBlockCollision() {
+
+        // scan array
+        for (int i = 0; i < PlayManager.staticBlocks.size(); i++) {
+            // get each blocks' x & y coords.
+            int targetX = PlayManager.staticBlocks.get(i).x;
+            int targetY = PlayManager.staticBlocks.get(i).y;
+
+            // check down (double for loop unfortunately ? )
+            for (int j = 0; j < b.length; j++) {
+                if (b[j].y + Block.SIZE == targetY && b[j].x == targetX)
+                    bottomCollision = true;
+            }
+            // check left
+            for (int j = 0; j < b.length; j++) {
+                if (b[j].x - Block.SIZE == targetY && b[j].y == targetY)
+                    leftCollision = true;
+            }
+            // check right (multiple for loops unfortunately. NOT time and space optimal)
+            for (int j = 0; j < b.length; j++) {
+                if (b[j].x + Block.SIZE == targetY && b[j].y == targetY)
+                    rightCollision = true;
+            }
         }
 
     }
