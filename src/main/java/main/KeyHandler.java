@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public static boolean upPressed, downPressed, leftPressed, rightPressed;
+    public static boolean upPressed, downPressed, leftPressed, rightPressed, pausePressed;
 
     @Override
     public void keyTyped(KeyEvent e) { }
@@ -24,6 +24,13 @@ public class KeyHandler implements KeyListener {
             downPressed = true;
         if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT)
             rightPressed = true;
+        // can use space bar or esc key to pause
+        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ESCAPE) {
+            if (pausePressed) // (pausePressed == true) depending on condition, if pause was pressed - resume, otherwise pause
+                pausePressed = false;
+            else
+                pausePressed = true;
+        }
 
     }
 

@@ -114,6 +114,16 @@ public class PlayManager {
             currentMino.draw(g2);
         }
 
+        // Draw pause screen
+        g2.setColor(new Color(204, 204, 255)); // periwinkle rgb value
+        g2.setFont(g2.getFont().deriveFont(50f));
+        if (KeyHandler.pausePressed) {
+            x = left_x + 90;
+            y = top_y + 320;
+            // g2.drawString("PAUSED", x, y);
+            g2.drawString("PAUSED\n01001101\nteste", x, y);
+        }
+
     }
 
 }
