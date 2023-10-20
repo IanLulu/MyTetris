@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class Mino_L1 extends Tetromino {
 
+    // constructor
     public Mino_L1() {
         create(Color.orange);
     }
@@ -54,8 +55,8 @@ public class Mino_L1 extends Tetromino {
     }
     public void getDirection3() {
         // 🟧🟧 this
-        //   🟧 orientation
-        //   🟧
+        // ⬛🟧 orientation
+        // ⬛🟧
         tempB[0].x = b[0].x;
         tempB[0].y = b[0].y;
         tempB[1].x = b[0].x;
@@ -68,7 +69,7 @@ public class Mino_L1 extends Tetromino {
         updateXY(3);
     }
     public void getDirection4() {
-        //      🟧 this
+        // ⬛⬛🟧 this
         // 🟧🟧🟧 orientation
         //
         tempB[0].x = b[0].x;
