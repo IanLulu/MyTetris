@@ -15,6 +15,8 @@ public class Tetromino {
 
     public int direction = 1; // 4 directions indicated by: 1 | 2 | 3 | 4
 
+    boolean leftCollision, rightCollision, bottomCollision;
+
     // instantiate arrays
     public void create(Color c) {
         b[0] = new Block(c);
@@ -45,6 +47,33 @@ public class Tetromino {
     public void getDirection3() {}
     public void getDirection4() {}
 
+    public void checkMovementCollision() {
+
+        // reset booleans upon reiteration
+        leftCollision = false;
+        rightCollision = false;
+        bottomCollision = false;
+
+        // Check frame collision
+        // Left wall
+        for (int i = 0; i < b.length; i++) {
+            if (b[i].x == PlayManager.left_x)
+                leftCollision = true;
+        }
+        // Right wall
+        for (int i = 0; i < b.length; i++) {
+            if (b[i].x + Block.SIZE == PlayManager.right_x)
+                rightCollision = true;
+        }
+        // Bottom floor
+        for (int i = 0; i < b.length; i++) {
+            if (b[i].y + Block.SIZE == PlayManager.bottom_y)
+                bottomCollision = true;
+        }
+
+    }
+    public void checkRotationCollision() {}
+
     public void update() {
 
         // Move the 'mino
@@ -58,30 +87,41 @@ public class Tetromino {
 
             KeyHandler.upPressed = false;
         }
-        if (KeyHandler.downPressed) {
-            b[0].y += Block.SIZE;
-            b[1].y += Block.SIZE;
-            b[2].y += Block.SIZE;
-            b[3].y += Block.SIZE;
 
-            // When moved down, reset the autoDropCounter
-            autoDropCounter = 0;
+        // Handle movement collision before checking down, left, and right key press checks
+        checkMovementCollision();
+
+        if (KeyHandler.downPressed) {
+            // If the tetromino's bottom is not hitting, it can go down. Left & right will be similar
+            if (bottomCollision == false) {
+                b[0].y += Block.SIZE;
+                b[1].y += Block.SIZE;
+                b[2].y += Block.SIZE;
+                b[3].y += Block.SIZE;
+
+                // When moved down, reset the autoDropCounter
+                autoDropCounter = 0;
+            }
 
             KeyHandler.downPressed = false;
         }
         if (KeyHandler.leftPressed) {
-            b[0].x -= Block.SIZE;
-            b[1].x -= Block.SIZE;
-            b[2].x -= Block.SIZE;
-            b[3].x -= Block.SIZE;
+            if (leftCollision == false) {
+                b[0].x -= Block.SIZE;
+                b[1].x -= Block.SIZE;
+                b[2].x -= Block.SIZE;
+                b[3].x -= Block.SIZE;
+            }
 
             KeyHandler.leftPressed = false;
         }
         if (KeyHandler.rightPressed) {
-            b[0].x += Block.SIZE;
-            b[1].x += Block.SIZE;
-            b[2].x += Block.SIZE;
-            b[3].x += Block.SIZE;
+            if (rightCollision == false) {
+                b[0].x += Block.SIZE;
+                b[1].x += Block.SIZE;
+                b[2].x += Block.SIZE;
+                b[3].x += Block.SIZE;
+            }
 
             KeyHandler.rightPressed = false;
         }

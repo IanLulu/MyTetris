@@ -1,6 +1,5 @@
 package main;
 
-
 import tetromino.Block;
 import tetromino.Mino_Bar;
 import tetromino.Mino_L1;
@@ -64,15 +63,26 @@ public class PlayManager {
         Tetromino mino = null;
         int i = new Random().nextInt(7);
 
-        switch (i) {
-            case 0: mino = new Mino_L1(); break;
-            case 1: mino = new Mino_L2(); break;
-            case 2: mino = new Mino_Z1(); break;
-            case 3: mino = new Mino_Z2(); break;
-            case 4: mino = new Mino_T(); break;
-            case 5: mino = new Mino_Bar(); break;
-            case 6: mino = new Mino_Square(); break;
-        }
+//        switch (i) {
+//            case 0: mino = new Mino_L1(); break;
+//            case 1: mino = new Mino_L2(); break;
+//            case 2: mino = new Mino_Z1(); break;
+//            case 3: mino = new Mino_Z2(); break;
+//            case 4: mino = new Mino_T(); break;
+//            case 5: mino = new Mino_Bar(); break;
+//            case 6: mino = new Mino_Square(); break;
+//        }
+        // switch expression:
+        mino = switch (i) {
+            case 0 -> new Mino_L1();
+            case 1 -> new Mino_L2();
+            case 2 -> new Mino_Z1();
+            case 3 -> new Mino_Z2();
+            case 4 -> new Mino_T();
+            case 5 -> new Mino_Bar();
+            case 6 -> new Mino_Square();
+            default -> mino;
+        };
 
         return mino;
 
