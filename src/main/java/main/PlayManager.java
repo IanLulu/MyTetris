@@ -11,6 +11,7 @@ import tetromino.Mino_Z2;
 import tetromino.Tetromino;
 
 import java.awt.*; // FUCK YOU INTELLIJ FUCK FUCK FUCK
+import java.util.ArrayList;
 import java.util.Random;
 
 /*
@@ -33,6 +34,11 @@ public class PlayManager {
     // store starting x & y
     final int MINO_START_X;
     final int MINO_START_Y;
+    Tetromino nextMino;
+    final int NEXT_MINO_X;
+    final int NEXT_MINO_Y;
+    public static ArrayList<Block> staticBlocks = new ArrayList<>();
+
 
     // Others
     public static int dropInterval = 60; // tetromino drops in every 60 frames or every second
@@ -50,10 +56,18 @@ public class PlayManager {
         MINO_START_X = left_x + (WIDTH / 2) - Block.SIZE;
         MINO_START_Y = top_y + Block.SIZE;
 
+        // where next 'mino spawn ( ? )
+        NEXT_MINO_X = right_x + 175;
+        NEXT_MINO_Y = top_y + 500;
+
         // set the starting tetromino
 //        currentMino = new Mino_L1();
         currentMino = pickMino();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
+
+        // create next tetromino
+        nextMino = pickMino();
+        nextMino.setXY(NEXT_MINO_X, NEXT_MINO_Y);
 
     }
 
@@ -90,7 +104,22 @@ public class PlayManager {
 
     public void update() {
 
-        currentMino.update();
+        // Check if the current tetromino is active
+        if (currentMino.active == false) {
+            // if the 'mino is not active, put it into the staticBlocks array
+            staticBlocks.add(currentMino.b[0]);
+            staticBlocks.add(currentMino.b[1]);
+            staticBlocks.add(currentMino.b[2]);
+            staticBlocks.add(currentMino.b[3]);
+
+            // replace the current tetromino with the next 'mino
+            currentMino = nextMino;
+            currentMino.setXY(MINO_START_X, MINO_START_Y);
+            nextMino = pickMino();
+            nextMino.setXY(NEXT_MINO_X, NEXT_MINO_Y);
+        }
+        else
+            currentMino.update();
 
     }
 
@@ -104,6 +133,10 @@ public class PlayManager {
         // Draw next tetromino frame
         int x = right_x + 100;
         int y = bottom_y - 200;
+        /* welp
+        // edit: adding color
+        g2.setColor(new Color(0, 0, 0, 100)); // alpha channel max value is 255
+           that didn't work */
         g2.drawRect(x, y, 200, 200);
         g2.setFont(new Font("Helvetica Monospaced", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -113,6 +146,13 @@ public class PlayManager {
         if (currentMino != null) {
             currentMino.draw(g2);
         }
+
+        // Draw the next tetromino
+        nextMino.draw(g2);
+
+        // Draw staticBlocks (inactive tetrominos)
+        for (int i = 0; i < staticBlocks.size(); i++)
+            staticBlocks.get(i).draw(g2);
 
         // Draw pause screen
         g2.setColor(new Color(204, 204, 255)); // periwinkle rgb value

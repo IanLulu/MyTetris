@@ -17,6 +17,8 @@ public class Tetromino {
 
     boolean leftCollision, rightCollision, bottomCollision;
 
+    public boolean active = true;
+
     // instantiate arrays
     public void create(Color c) {
         b[0] = new Block(c);
@@ -156,15 +158,19 @@ public class Tetromino {
             KeyHandler.rightPressed = false;
         }
 
-        autoDropCounter++; // the counter increases in every frame
+        if (bottomCollision) // (bottomCollision == true)
+            active = false; // deactivate the current tetromino
+        else { // otherwise keep autodropping
+            autoDropCounter++; // the counter increases in every frame
 
-        if (autoDropCounter == PlayManager.dropInterval) {
-            // the 'mino goes down
-            b[0].y += Block.SIZE;
-            b[1].y += Block.SIZE;
-            b[2].y += Block.SIZE;
-            b[3].y += Block.SIZE;
-            autoDropCounter = 0;
+            if (autoDropCounter == PlayManager.dropInterval) {
+                // the 'mino goes down
+                b[0].y += Block.SIZE;
+                b[1].y += Block.SIZE;
+                b[2].y += Block.SIZE;
+                b[3].y += Block.SIZE;
+                autoDropCounter = 0;
+            }
         }
 
     }

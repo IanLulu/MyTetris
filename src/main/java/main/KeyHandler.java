@@ -31,6 +31,11 @@ public class KeyHandler implements KeyListener {
             else
                 pausePressed = true;
         }
+        /*
+         * to implement in the future: hard drop key
+         * if (code == KeyEvent.VK_SPACE) // instead of pausing, space bar is used for hard drop
+         *      spacePressed = true;
+         */
 
     }
 

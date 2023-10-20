@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
         // Panel Settings
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.black);
+//        this.setBackground(new Color(38, 50, 181)); // rgb value for a darkish blue color I picked
         this.setLayout(null);
         // Implement KeyListener
         this.addKeyListener(new KeyHandler());
