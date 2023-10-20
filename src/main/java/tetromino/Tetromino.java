@@ -19,6 +19,9 @@ public class Tetromino {
 
     public boolean active = true;
 
+    public boolean deactivating;
+    int deactivateCounter = 0;
+
     // instantiate arrays
     public void create(Color c) {
         b[0] = new Block(c);
@@ -141,6 +144,10 @@ public class Tetromino {
 
     public void update() {
 
+        if (deactivating) {
+            deactivating();
+        }
+
         // Move the 'mino
         if (KeyHandler.upPressed) { // special case: up key - this rotates the tetromino
             switch (direction) {
@@ -192,7 +199,8 @@ public class Tetromino {
         }
 
         if (bottomCollision) // (bottomCollision == true)
-            active = false; // deactivate the current tetromino
+//            active = false; // deactivate the current tetromino
+            deactivating = true;
         else { // otherwise keep autodropping
             autoDropCounter++; // the counter increases in every frame
 
@@ -206,6 +214,21 @@ public class Tetromino {
             }
         }
 
+    }
+
+    private void deactivating() {
+
+        deactivateCounter++;
+
+        // Wait 45 frames to deactivate
+        if (deactivateCounter == 45) {
+            deactivateCounter = 0;
+            checkMovementCollision(); // check if the bottom is still hitting
+
+            // if the bottom is still colliding with another block, deactivate the tetromino
+            if (bottomCollision == true)
+                active = false; // deactivate the current tetromino
+        }
     }
 
     public void draw(Graphics2D g2) {
