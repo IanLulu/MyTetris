@@ -105,7 +105,7 @@ public class PlayManager {
     public void update() {
 
         // Check if the current tetromino is active
-        if (currentMino.active == false) {
+        if (!currentMino.active) { // simplified currentMino.active == false
             // if the 'mino is not active, put it into the staticBlocks array
             staticBlocks.add(currentMino.b[0]);
             staticBlocks.add(currentMino.b[1]);
@@ -153,10 +153,10 @@ public class PlayManager {
                     }
 
                     // a line has been deleted so need to slide down blocks that are above it
-                    for (int i = 0; i < staticBlocks.size(); i++) {
+                    for (Block staticBlock : staticBlocks) { // "enhanced for loop" iterates through staticBlocks array
                         // if a block is above the current y, move it down by the block size
-                        if (staticBlocks.get(i).y < y)
-                            staticBlocks.get(i).y += Block.SIZE;
+                        if (staticBlock.y < y)
+                            staticBlock.y += Block.SIZE;
                     }
                 }
 
@@ -173,16 +173,21 @@ public class PlayManager {
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(4f)); // 4f = 4 pixels (?)
         g2.drawRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
+        g2.setColor(new Color(8, 11, 41)); // darker navyish color
+        g2.fillRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
 
         // Draw next tetromino frame
         int x = right_x + 100;
         int y = bottom_y - 200;
         /* welp
         // edit: adding color
-        g2.setColor(new Color(0, 0, 0, 100)); // alpha channel max value is 255
+           g2.setColor(new Color(0, 0, 0, 100)); // alpha channel max value is 255
            that didn't work */
+        g2.setColor(new Color(255, 255, 255, 128));
+        g2.fillRect(x, y, 200, 200);
         g2.drawRect(x, y, 200, 200);
-        g2.setFont(new Font("Helvetica Monospaced", Font.PLAIN, 30));
+//        g2.setFont(new Font("Helvetica Monospaced", Font.PLAIN, 30));
+        g2.setFont(new Font("Silver", Font.PLAIN, 64)); // changed to new font from: https://poppyworks.itch.io/silver
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("NEXT", x + 60, y + 60);
 
@@ -201,12 +206,12 @@ public class PlayManager {
         // Draw pause screen
         g2.setColor(new Color(204, 204, 255)); // periwinkle rgb value
         /* ^^^ source: https://stackoverflow.com/questions/42855224/how-to-add-rgb-values-into-setcolor-in-java */
-        g2.setFont(g2.getFont().deriveFont(50f));
+        g2.setFont(g2.getFont().deriveFont(128f));
         if (KeyHandler.pausePressed) {
-            x = left_x + 90;
+            x = left_x + 70;
             y = top_y + 320;
-            // g2.drawString("PAUSED", x, y);
-            g2.drawString("PAUSED\n01001101\nteste", x, y);
+            g2.drawString("PAUSED", x, y);
+//            g2.drawString("PAUSED\n01001101\nteste", x, y);
         }
 
     }
