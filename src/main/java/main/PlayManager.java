@@ -43,6 +43,11 @@ public class PlayManager {
     // Others
     public static int dropInterval = 60; // tetromino drops in every 60 frames or every second
 
+    // Effects
+    boolean effectsCounterOn;
+    int effectsCounter;
+    ArrayList<Integer> effectY = new ArrayList<>();
+
     // constructor 4 class
     public PlayManager() {
 
@@ -146,6 +151,10 @@ public class PlayManager {
                 // if the blockCount equals 12, that means the current y line is all filled with blocks
                 // so we can delete the blocks in the line
                 if (blockCount == 12) {
+
+                    effectsCounterOn = true;
+                    effectY.add(y);
+
                     for (int i = staticBlocks.size() - 1; i > -1; i--) {
                         // remove all the blocks in current y line
                         if (staticBlocks.get(i).y == y)
@@ -202,6 +211,21 @@ public class PlayManager {
         // Draw staticBlocks (inactive tetrominos)
         for (int i = 0; i < staticBlocks.size(); i++)
             staticBlocks.get(i).draw(g2);
+
+        // Draw effects
+        if (effectsCounterOn) {
+            effectsCounter++;
+
+            g2.setColor(Color.red);
+            for (int i = 0; i < effectY.size(); i++)
+                g2.fillRect(left_x, effectY.get(i), WIDTH, Block.SIZE);
+
+            if (effectsCounter == 10) { // 10 frames
+                effectsCounterOn = false;
+                effectsCounter = 0;
+                effectY.clear();
+            }
+        }
 
         // Draw pause screen
         g2.setColor(new Color(204, 204, 255)); // periwinkle rgb value
