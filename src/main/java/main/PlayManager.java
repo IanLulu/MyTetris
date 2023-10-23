@@ -41,12 +41,15 @@ public class PlayManager {
 
 
     // Others
-    public static int dropInterval = 60; // tetromino drops in every 60 frames or every second
+    public static int dropInterval = 60; // tetromino drops in every 60 frames or every second (game is set to 60 fps {@see GamePanel#FPS FPS})
 
     // Effects
     boolean effectsCounterOn;
     int effectsCounter;
     ArrayList<Integer> effectY = new ArrayList<>();
+
+    // Game over
+    boolean gameOver;
 
     // constructor 4 class
     public PlayManager() {
@@ -117,6 +120,13 @@ public class PlayManager {
             staticBlocks.add(currentMino.b[2]);
             staticBlocks.add(currentMino.b[3]);
 
+            // check if the game is over
+            if (currentMino.b[0].x == MINO_START_X && currentMino.b[0].y == MINO_START_Y) {
+                // this means the currentMino immediately collided a block and couldn't move at all
+                // so it's x & y are the same with the nextMino's
+                gameOver = true; // Stop game when blocks have reached the spawn area (GAME OVER)
+            }
+
             currentMino.deactivating = false;
 
             // replace the current tetromino with the next 'mino
@@ -179,11 +189,12 @@ public class PlayManager {
     public void draw(Graphics2D g2) {
 
         // Draw main play area frame
+        g2.setColor(new Color(8, 11, 41)); // darker navyish color
+        g2.fillRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
+        // border
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(4f)); // 4f = 4 pixels (?)
         g2.drawRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
-        g2.setColor(new Color(8, 11, 41)); // darker navyish color
-        g2.fillRect(left_x - 4, top_y - 4, WIDTH + 8, HEIGHT + 8);
 
         // Draw next tetromino frame
         int x = right_x + 100;
@@ -198,7 +209,7 @@ public class PlayManager {
 //        g2.setFont(new Font("Helvetica Monospaced", Font.PLAIN, 30));
         g2.setFont(new Font("Silver", Font.PLAIN, 64)); // changed to new font from: https://poppyworks.itch.io/silver
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.drawString("NEXT", x + 60, y + 60);
+        g2.drawString("NEXT", x + 64, y + 48);
 
         // Draw the current tetromino
         if (currentMino != null) {
@@ -231,12 +242,29 @@ public class PlayManager {
         g2.setColor(new Color(204, 204, 255)); // periwinkle rgb value
         /* ^^^ source: https://stackoverflow.com/questions/42855224/how-to-add-rgb-values-into-setcolor-in-java */
         g2.setFont(g2.getFont().deriveFont(128f));
-        if (KeyHandler.pausePressed) {
+        if (KeyHandler.pausePressed && !gameOver) { // {@see GamePanel#update()
             x = left_x + 70;
             y = top_y + 320;
             g2.drawString("PAUSED", x, y);
 //            g2.drawString("PAUSED\n01001101\nteste", x, y);
         }
+        else if (gameOver) { // Draw game over screen
+            x = left_x + 6;
+            y = top_y + 320;
+            g2.drawString("GAME OVER", x, y);
+        }
+
+        // Draw game title
+        x = 64;
+        y = top_y + 320;
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Helvetica Monospaced", Font.ITALIC, 64));
+        g2.drawString("MyTetris", x, y);
+
+        // Draw description
+        y = top_y + 360;
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 16f));
+        g2.drawString("A simple recreation of the tetris game", x, y);
 
     }
 

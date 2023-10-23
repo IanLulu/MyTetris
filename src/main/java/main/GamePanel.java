@@ -63,8 +63,8 @@ public class GamePanel extends JPanel implements Runnable {
     // update info @ each refresh
     private void update() {
 
-        // Only draw on-screen information when game is not paused
-        if (KeyHandler.pausePressed == false)
+        // Only draw on-screen information when game is not paused/over
+        if (KeyHandler.pausePressed == false && !pm.gameOver)
             pm.update();
 
     }
