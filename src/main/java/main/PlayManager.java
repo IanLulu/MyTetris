@@ -227,7 +227,7 @@ public class PlayManager {
         if (effectsCounterOn) {
             effectsCounter++;
 
-            g2.setColor(Color.red);
+            g2.setColor(Color.white);
             for (int i = 0; i < effectY.size(); i++)
                 g2.fillRect(left_x, effectY.get(i), WIDTH, Block.SIZE);
 
